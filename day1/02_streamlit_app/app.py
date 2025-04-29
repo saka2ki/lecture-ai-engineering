@@ -47,7 +47,7 @@ pipe = llm.load_model()
 
 # --- Streamlit アプリケーション ---
 st.title(f"🤖 {MODEL_NAME} Chatbot with Feedback")
-st.write("Gemmaモデルを使用したチャットボットです。回答に対してフィードバックを行えます。")
+st.write(f"{MODEL_NAME}を使用したチャットボットです。回答に対してフィードバックを行えます。")
 st.markdown("---")
 
 # --- サイドバー ---
