@@ -5,6 +5,12 @@ on:
     branches: [ main, master  ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      run_mode:
+        description: '実行モード'
+        required: false
+        default: 'test'
 
 jobs:
   test:
@@ -51,9 +57,9 @@ jobs:
       run: |
         git checkout HEAD~1
 
-    - name: 依存関係を再度インストール
-      run: |
-        pip install -r requirement.txt
+    #- name: 依存関係を再度インストール
+    #  run: |
+    #    pip install -r requirement.txt
     
     - name: 一つ前のモデルの検証
       run: |
