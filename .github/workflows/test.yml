@@ -56,7 +56,7 @@ jobs:
     - name: 今の精度を保存
       id: current
       run: |
-        output = $(pytest day5/演習3/tests/test_model.py -k test_model_accuracy -v -s | head -n 1)
+        output=$(pytest day5/演習3/tests/test_model.py -k test_model_accuracy -v -s | head -n 1)
         echo "output=$output" >> $GITHUB_OUTPUT
 
     - name: 一つ前のcommitでcheckout
