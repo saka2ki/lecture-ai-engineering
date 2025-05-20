@@ -71,10 +71,10 @@ jobs:
     
     - name: 一つ前のモデルと比較
       run: |
-        current_acc = "${{steps.current.outputs.output}}"
-        before_acc = $(pytest day5/演習3/tests/test_model.py -k test_model_accuracy -v -s | head -n 1)
-        current_score = $(echo "$current\acc" | grep -oE '[0-9]+(\.[0-9]+)?')
-        before_score = $(echo "$before_acc" | grep -oE '[0-9]+(\.[0-9]+)?')
+        current_acc="${{steps.current.outputs.output}}"
+        before_acc=$(pytest day5/演習3/tests/test_model.py -k test_model_accuracy -v -s | head -n 1)
+        current_score=$(echo "$current\acc" | grep -oE '[0-9]+(\.[0-9]+)?')
+        before_score=$(echo "$before_acc" | grep -oE '[0-9]+(\.[0-9]+)?')
         if (( $(echo "$current_score < $before_score" | bc -l) )); then
             echo "Error: New accuracy is lower"
             exit 1
