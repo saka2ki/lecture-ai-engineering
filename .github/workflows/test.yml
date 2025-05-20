@@ -73,6 +73,7 @@ jobs:
       run: |
         current_acc="${{steps.current.outputs.output}}"
         before_acc=$(pytest day5/演習3/tests/test_model.py -k test_model_accuracy -v -s | grep "精度:")
+        echo "$before_acc"
         current_score=$(echo "$current_acc" | grep -oE '0\.[0-9]+')
         before_score=$(echo "$before_acc" | grep -oE '0\.[0-9]+')
         if (( $(echo "$current_score < $before_score" | bc -l) )); then
