@@ -174,5 +174,4 @@ def test_model_reproducibility(sample_data, preprocessor):
         predictions1, predictions2
     ), "モデルの予測結果に再現性がありません"
 
-    print(f'model1の精度: {predictions1}, model2の精度: {predictions2}')
-
+    print(f"model1の精度: {predictions1}, model2の精度: {predictions2}")
