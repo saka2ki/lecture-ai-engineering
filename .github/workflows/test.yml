@@ -38,9 +38,21 @@ jobs:
         
     - name: Run model tests
       run: |
-        pytest day5/演習3/tests/test_model.py -v
+        pytest day5/演習3/tests/test_model.py -v -s
 
-    - name: Validate model accuracy and model inference time
+    - name: 演習2のmain.pyをそのまま実行していますが、宿題の趣旨とは異なりますか?演習３も配布時点で既に精度・推論時間・ベースライン比較・再現性が実装されているので追記箇所ほぼ無いです。
       working-directory: day5/演習2
       run: |
         python main.py -v
+
+    - name: 一つ前のcommitでcheckout
+      run: |
+        git checkout HEAD~1
+
+    - name: 依存関係を再度インストール
+      run: |
+        pip install -r requirement.txt
+    
+    - name: 一つ前のモデルの検証
+      run: |
+        pytest day5/演習3/tests/test_model.py -v -s
