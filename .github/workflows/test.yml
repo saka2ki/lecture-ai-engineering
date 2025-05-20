@@ -41,5 +41,6 @@ jobs:
         pytest day5/演習3/tests/test_model.py -v
 
     - name: Validate model accuracy and model inference time
+      working-directory: day5/演習2
       run: |
-        python day5/演習2/main.py -v
+        python main.py -v
