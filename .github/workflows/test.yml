@@ -57,7 +57,7 @@ jobs:
       id: current
       run: |
         output=$(pytest day5/演習3/tests/test_model.py -k test_model_accuracy -v -s | grep "精度:")
-        echo "$output" >> $GITHUB_OUTPUT
+        echo "output=$output" >> $GITHUB_OUTPUT
 
     - name: 一つ前のcommitでcheckout
       run: |
