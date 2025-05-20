@@ -46,21 +46,35 @@ jobs:
         
     - name: Run model tests
       run: |
-        pytest day5/演習3/tests/test_model.py -v -s
+        pytest day5/演習3/tests/test_model.py -v -s > after
 
     - name: 演習2のmain.pyをそのまま実行していますが、宿題の趣旨とは異なりますか?演習３も配布時点で既に精度・推論時間・ベースライン比較・再現性が実装されているので追記箇所ほぼ無いです。
       working-directory: day5/演習2
       run: |
         python main.py -v
 
+    - name: 今の精度を保存
+      id: current
+      run: output = $(pytest test_model.py::test_model_accuracy -v -s | head -n 1)
+            echo "output=$output" >> $GITHUB_OUTPUT
+
     - name: 一つ前のcommitでcheckout
       run: |
         git checkout HEAD~1
 
-    #- name: 依存関係を再度インストール
-    #  run: |
-    #    pip install -r requirement.txt
-    
-    - name: 一つ前のモデルの検証
+    - name: 依存関係を再度インストール
       run: |
-        pytest day5/演習3/tests/test_model.py -v -s
+        python -m pip install --upgrade pip
+        pip install pytest great_expectations pandas scikit-learn flake8 black mypy pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: 一つ前のモデルと比較
+      run: |
+        current_acc = "${{steps.current.outputs.output}}"
+        before_acc = $(pytest test_model.py::test_model_accuracy -v -s | head -n 1)
+        current_score = $(echo "$current\acc" | grep -oE '[0-9]+(\.[0-9]+)?')
+        before_score = $(echo "$before_acc" | grep -oE '[0-9]+(\.[0-9]+)?')
+        if (( $(echo "$current_score < $before_score" | bc -l) )); then
+            echo "Error: New accuracy is lower"
+            exit 1
+        fi
