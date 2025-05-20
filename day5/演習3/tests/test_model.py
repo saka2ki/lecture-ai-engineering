@@ -174,4 +174,5 @@ def test_model_reproducibility(sample_data, preprocessor):
         predictions1, predictions2
     ), "モデルの予測結果に再現性がありません"
 
-    print(f"model1の精度: {predictions1}, model2の精度: {predictions2}")
+    rate = sum(a==b for a, b in zip(predictions1, predictions2)) / len(predictions1) *100
+    print(f"同じ２つのモデルの出力の一致割合: {rate}%")
